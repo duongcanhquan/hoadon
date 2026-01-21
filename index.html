@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Số Hóa Hóa Đơn AI</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5; /* Màu tím xanh hiện đại */
+            --hover-color: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+
+        p.subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 2rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary-color);
+            background-color: #eef2ff;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            display: none; /* Ẩn mặc định */
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--hover-color);
+        }
+
+        .btn-submit:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Status Messages */
+        .status-message {
+            margin-top: 1.5rem;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .success { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🧾 Upload Hóa Đơn</h1>
+        <p class="subtitle">Hệ thống bóc tách dữ liệu tự động AI</p>
+
+        <form id="uploadForm">
+            <div class="upload-area" id="dropZone">
+                <div class="upload-icon">☁️</div>
+                <div id="uploadText">Kéo thả ảnh vào đây hoặc bấm để chọn</div>
+                <div id="fileName" class="file-info"></div>
+                <input type="file" name="data" id="fileInput" accept="image/*,application/pdf" required>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <div class="spinner" id="spinner"></div>
+                <span id="btnText">Bắt đầu Xử lý</span>
+            </button>
+        </form>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="footer">
+            Powered by N8N & OpenAI GPT-4o
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // CẤU HÌNH: DÁN LINK WEBHOOK CỦA BẠN VÀO ĐÂY
+        // ==========================================
+        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook/upload-invoice"; 
+        // Ví dụ: "https://apchn-host.lapage.vn/webhook/upload-invoice"
+        // ==========================================
+
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileName');
+        const uploadText = document.getElementById('uploadText');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const spinner = document.getElementById('spinner');
+        const statusMsg = document.getElementById('statusMessage');
+
+        // Hiển thị tên file khi chọn
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                fileNameDisplay.textContent = "📄 " + this.files[0].name;
+                fileNameDisplay.style.display = 'block';
+                uploadText.style.display = 'none';
+            }
+        });
+
+        // Xử lý khi bấm nút Gửi
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Kiểm tra xem đã điền link webhook chưa
+            if (N8N_WEBHOOK_URL.includes("DÁN_LINK")) {
+                showStatus("⚠️ Vui lòng mở file index.html và điền Link Webhook vào phần Cấu hình!", "error");
+                return;
+            }
+
+            // Hiệu ứng Loading
+            setLoading(true);
+            showStatus("", "none"); // Ẩn thông báo cũ
+
+            const formData = new FormData(form);
+
+            try {
+                // Gửi dữ liệu sang N8N
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showStatus("✅ Thành công! Dữ liệu đang được AI xử lý và ghi vào Sheet.", "success");
+                    form.reset();
+                    resetUI();
+                } else {
+                    showStatus("❌ Lỗi Server: " + response.statusText, "error");
+                }
+            } catch (error) {
+                console.error("Lỗi:", error);
+                // Lỗi này thường do CORS nếu chạy trên Github Pages mà N8N chưa cấu hình
+                showStatus("❌ Lỗi kết nối! (Có thể do chặn CORS hoặc sai Link)", "error");
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                submitBtn.disabled = true;
+                btnText.textContent = "Đang gửi...";
+                spinner.style.display = 'block';
+            } else {
+                submitBtn.disabled = false;
+                btnText.textContent = "Bắt đầu Xử lý";
+                spinner.style.display = 'none';
+            }
+        }
+
+        function resetUI() {
+            fileNameDisplay.style.display = 'none';
+            uploadText.style.display = 'block';
+        }
+
+        function showStatus(message, type) {
+            statusMsg.textContent = message;
+            statusMsg.style.display = type === 'none' ? 'none' : 'block';
+            statusMsg.className = 'status-message ' + type;
+        }
+    </script>
+</body>
+</html>
