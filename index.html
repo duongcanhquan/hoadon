@@ -3,273 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cổng Tiếp Nhận Hóa Đơn</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Cổng Hóa Đơn APC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --neon-accent: #00f2ff;
-            --primary-gradient: linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --primary-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 50%, #E0C3FC 100%);
+            --btn-gradient: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+            --text-color: #555;
+            --accent-color: #ff758c;
         }
 
         body {
-            font-family: 'Prompt', sans-serif;
+            font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000;
-            overflow: hidden;
-            color: #fff;
-        }
-
-        /* Nền Aurora Đa Sắc Chuyển Động */
-        .aurora-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #ff0055, #0033ff, #00ffcc, #ffcc00);
+            /* Nền Hồng Xanh Pastel Chuyển Động */
+            background: linear-gradient(300deg, #ffdee9, #b5fffc, #d4fc79, #96e6a1);
             background-size: 400% 400%;
-            animation: auroraMove 15s ease infinite;
-            opacity: 0.8;
+            animation: gradientFlow 15s ease infinite;
+            color: var(--text-color);
         }
 
-        /* Lớp phủ hạt noise để tạo chất liệu phim */
-        .noise-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.05;
-        }
-
-        @keyframes auroraMove {
+        @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Thẻ Kính Trung Tâm */
+        /* Thẻ Kính Sáng */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 2px solid #fff;
+            border-radius: 35px;
             padding: 40px 30px;
             width: 90%;
             max-width: 420px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(161, 140, 209, 0.25);
             text-align: center;
             position: relative;
-            transform-style: preserve-3d;
-            animation: floatCard 6s ease-in-out infinite;
-        }
-
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Logo Hiệu ứng nổi */
-        .logo-container img {
-            width: 160px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
-            margin-bottom: 20px;
+            overflow: hidden;
             transition: transform 0.3s;
         }
-        .logo-container img:hover { transform: scale(1.05); }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Bong bóng trang trí */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            z-index: -1;
+            animation: floatBubble 6s infinite ease-in-out;
+        }
+        .b1 { width: 100px; height: 100px; top: -20px; left: -20px; animation-delay: 0s; }
+        .b2 { width: 80px; height: 80px; bottom: -30px; right: -10px; animation-delay: 2s; background: rgba(181, 255, 252, 0.5); }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(15px) scale(1.1); }
+        }
+
+        /* Logo */
+        .logo-container img {
+            width: 140px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+        .logo-container img:hover { transform: scale(1.1) rotate(2deg); }
 
         h2 {
-            font-size: 1.8rem;
-            margin: 0;
-            background: linear-gradient(to right, #fff, #a5f3fc);
+            font-size: 1.6rem;
+            margin: 0 0 5px 0;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 800;
         }
-        
-        p.desc {
+        p.subtitle {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: #888;
             margin-bottom: 30px;
-            font-weight: 300;
         }
 
-        /* Input Style Mới */
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
+        /* Input Styles */
+        .input-group { margin-bottom: 20px; text-align: left; position: relative; }
         .input-label {
-            font-size: 0.8rem;
-            color: #a5f3fc;
+            font-size: 0.85rem;
+            color: #777;
+            font-weight: 700;
             margin-bottom: 8px;
             display: block;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 700;
+            margin-left: 10px;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            color: #fff;
+            padding: 16px 20px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.7);
             font-size: 1rem;
+            color: #444;
             outline: none;
             transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
+            font-family: 'Nunito', sans-serif;
         }
-
         input[type="text"]:focus {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: var(--neon-accent);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            background: #fff;
+            border-color: #ff9a9e;
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.2);
         }
 
-        /* Vùng Upload Đa Sắc */
+        /* Vùng Upload */
         .upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 30px 20px;
+            border: 2px dashed #ffcad4;
+            border-radius: 25px;
+            padding: 25px;
             cursor: pointer;
-            transition: 0.3s;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
             position: relative;
-            overflow: hidden;
         }
-
         .upload-area:hover {
-            border-color: var(--neon-accent);
-            background: rgba(0, 242, 255, 0.05);
+            border-color: #ff9a9e;
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.02);
         }
-
         .upload-area.has-file {
             border-style: solid;
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
+            border-color: #4facfe;
+            background: rgba(224, 247, 250, 0.6);
         }
 
-        .icon-upload {
-            font-size: 40px;
-            margin-bottom: 10px;
-            display: block;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
-        }
+        .icon-box { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+        #uploadText { color: #888; font-weight: 600; font-size: 0.9rem; }
+        #fileInput { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
 
-        #fileInput {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; cursor: pointer;
-        }
-
-        /* Nút Submit Glow */
-        .btn-glow {
+        /* Nút Submit Gradient */
+        .btn-gradient {
             width: 100%;
             padding: 18px;
             border: none;
-            border-radius: 15px;
-            background: #fff;
-            color: #000;
+            border-radius: 20px;
+            background-image: var(--btn-gradient);
+            background-size: 300% 100%;
+            color: white;
             font-size: 1.1rem;
             font-weight: 800;
-            text-transform: uppercase;
             cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+            margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.3);
+            transition: all 0.4s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-gradient:hover {
+            background-position: 100% 0;
+            box-shadow: 0 15px 30px rgba(255, 117, 140, 0.5);
+            transform: translateY(-2px);
         }
 
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary-gradient);
-            z-index: -1;
-            transition: transform 0.5s;
-            transform: scaleX(0);
-            transform-origin: right;
-        }
-
-        .btn-glow:hover {
-            color: #fff;
-            box-shadow: 0 0 30px rgba(255, 60, 172, 0.6);
-            transform: translateY(-3px);
-        }
-
-        .btn-glow:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Loading Spinner */
+        /* Loading & Thông báo */
         .loader {
-            width: 24px; height: 24px;
-            border: 3px solid #fff;
-            border-bottom-color: transparent;
+            width: 25px; height: 25px;
+            border: 3px solid rgba(255,255,255,0.5);
+            border-top-color: #fff;
             border-radius: 50%;
             display: none;
             margin: 0 auto;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.8s infinite linear;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .status-msg {
             margin-top: 20px;
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 15px;
             font-size: 0.9rem;
             display: none;
-            font-weight: 500;
+            font-weight: 700;
         }
-        .success { background: rgba(0, 255, 136, 0.2); border: 1px solid #00ff88; color: #00ff88; }
-        .error { background: rgba(255, 59, 59, 0.2); border: 1px solid #ff3b3b; color: #ff3b3b; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
     </style>
 </head>
 <body>
 
-    <div class="aurora-bg"></div>
-    <div class="noise-overlay"></div>
-
     <div class="glass-card">
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+
         <div class="logo-container">
             <img src="https://github.com/duongcanhquan/image/blob/main/Logo%20Cao%20%C4%91a%CC%86%CC%89ng%20Vie%CC%A3%CC%82t%20My%CC%83%20-%20ba%CC%89n%20chua%CC%82%CC%89n%202025-01.png?raw=true" alt="APC Logo">
         </div>
         
-        <h2>Hệ Thống Số Hóa</h2>
-        <p class="desc">Xử lý hóa đơn tự động bằng AI 2.0</p>
+        <h2>Hệ Thống Kế Toán</h2>
+        <p class="subtitle">Tự động hóa xử lý chứng từ</p>
 
         <form id="uploadForm">
             <div class="input-group">
-                <label class="input-label">🏢 Tên Đối Tác / Đơn Vị</label>
-                <input type="text" id="companyName" placeholder="Nhập tên đối tác..." required>
+                <label class="input-label">🏢 ĐỐI TÁC / ĐƠN VỊ</label>
+                <input type="text" id="companyName" placeholder="Nhập tên công ty..." required>
             </div>
 
             <div class="input-group">
-                <label class="input-label">📂 Hóa đơn / Chứng từ</label>
+                <label class="input-label">📂 HÓA ĐƠN GỐC</label>
                 <div class="upload-area" id="dropZone">
-                    <span class="icon-upload">📸</span>
-                    <span id="uploadText">Chạm để Chụp ảnh hoặc Chọn File</span>
-                    <span id="fileName" style="display:none; color: #00ff88; font-weight: bold;"></span>
+                    <span class="icon-box">🖼️</span>
+                    <span id="uploadText">Chạm để chọn ảnh hoặc chụp mới</span>
+                    <span id="fileName" style="display:none; color: #4facfe; font-weight: bold;"></span>
                     <input type="file" name="data" id="fileInput" accept="image/*,application/pdf" required>
                 </div>
             </div>
 
-            <button type="submit" class="btn-glow" id="submitBtn">
-                <span id="btnText">Khởi chạy Xử lý</span>
+            <button type="submit" class="btn-gradient" id="submitBtn">
+                <span id="btnText">BẮT ĐẦU XỬ LÝ ✨</span>
                 <div class="loader" id="loader"></div>
             </button>
         </form>
@@ -279,9 +241,9 @@
 
     <script>
         // ==========================================
-        // 👇 DÁN LINK WEBHOOK CỦA BẠN VÀO DÒNG DƯỚI 👇
+        // 👇 DÁN LINK WEBHOOK CỦA BẠN VÀO ĐÂY 👇
         // ==========================================
-        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook-test/upload-invoice"; 
+        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook/upload-invoice"; 
         // ==========================================
 
         const fileInput = document.getElementById('fileInput');
@@ -307,7 +269,7 @@
             e.preventDefault();
             if (!fileInput.files[0]) { alert("Vui lòng chọn file!"); return; }
 
-            // Tạo tên file mới
+            // Tạo tên file thông minh: YYYY-MM-DD_TenCongTy_TenGoc
             const originalFile = fileInput.files[0];
             const companyName = companyInput.value.trim().replace(/[^a-zA-Z0-9\s_]/g, "").replace(/\s+/g, "_");
             const dateStr = new Date().toISOString().split('T')[0];
@@ -326,15 +288,16 @@
             try {
                 const response = await fetch(N8N_WEBHOOK_URL, { method: 'POST', body: formData });
                 if (response.ok) {
-                    showStatus("✨ Thành công! Dữ liệu đang được AI xử lý.", "success");
+                    showStatus("✨ Thành công! Dữ liệu đang được AI phân tích.", "success");
                     document.getElementById('uploadForm').reset();
-                    setTimeout(resetUI, 3000);
+                    setTimeout(resetUI, 4000);
                 } else {
                     showStatus("❌ Lỗi Server. Vui lòng thử lại.", "error");
                 }
             } catch (error) {
+                // Fallback nếu lỗi CORS nhưng thực tế đã gửi được
                 console.error(error);
-                showStatus("🚀 Đã gửi yêu cầu (Check Sheet nhé).", "success");
+                showStatus("🚀 Đã gửi yêu cầu! Vui lòng kiểm tra Sheet.", "success");
             } finally {
                 submitBtn.disabled = false;
                 btnText.style.display = 'block';
