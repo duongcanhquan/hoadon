@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cổng Hóa Đơn APC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Cổng Upload Hóa Đơn - APC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --primary-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 50%, #E0C3FC 100%);
-            --btn-gradient: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
-            --text-color: #555;
-            --accent-color: #ff758c;
+            /* Tinh chỉnh màu kính cho trong suốt hơn */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --btn-gradient: linear-gradient(45deg, #FF9A9E, #FECFEF, #96e6a1);
+            --text-color: #2d3748;
         }
 
         body {
@@ -23,300 +26,158 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Nền Hồng Xanh Pastel Chuyển Động */
-            background: linear-gradient(300deg, #ffdee9, #b5fffc, #d4fc79, #96e6a1);
+            /* Background Gradient động mượt mà hơn */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
-            animation: gradientFlow 15s ease infinite;
+            animation: gradientBG 15s ease infinite;
             color: var(--text-color);
+            overflow: hidden; /* Tránh thanh cuộn thừa */
         }
 
-        @keyframes gradientFlow {
+        @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Thẻ Kính Sáng */
+        /* CARD KÍNH CHÍNH */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(150%);
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 2px solid #fff;
-            border-radius: 35px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            border-left: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
             padding: 40px 30px;
             width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 60px rgba(161, 140, 209, 0.25);
+            max-width: 450px;
+            box-shadow: var(--glass-shadow);
             text-align: center;
             position: relative;
-            overflow: hidden;
-            transition: transform 0.3s;
+            z-index: 1;
+            transition: transform 0.4s ease;
         }
         
         .glass-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
         }
 
-        /* Bong bóng trang trí */
+        /* Bong bóng trang trí nền */
+        .bubble-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
         .bubble {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            z-index: -1;
-            animation: floatBubble 6s infinite ease-in-out;
+            background: rgba(255, 255, 255, 0.3);
+            animation: float 8s infinite ease-in-out;
         }
-        .b1 { width: 100px; height: 100px; top: -20px; left: -20px; animation-delay: 0s; }
-        .b2 { width: 80px; height: 80px; bottom: -30px; right: -10px; animation-delay: 2s; background: rgba(181, 255, 252, 0.5); }
+        .b1 { width: 120px; height: 120px; top: 10%; left: 10%; animation-delay: 0s; background: rgba(255, 255, 255, 0.2); }
+        .b2 { width: 180px; height: 180px; bottom: 10%; right: 5%; animation-delay: 4s; background: rgba(255, 255, 255, 0.15); }
 
-        @keyframes floatBubble {
+        @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(15px) scale(1.1); }
+            50% { transform: translateY(-20px) scale(1.05); }
         }
 
         /* Logo */
         .logo-container img {
-            width: 140px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            width: 120px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
             transition: transform 0.3s;
         }
-        .logo-container img:hover { transform: scale(1.1) rotate(2deg); }
+        .logo-container img:hover { transform: scale(1.05) rotate(3deg); }
 
         h2 {
-            font-size: 1.6rem;
-            margin: 0 0 5px 0;
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+            margin: 10px 0 5px 0;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             font-weight: 800;
         }
         p.subtitle {
-            font-size: 0.9rem;
-            color: #888;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
             margin-bottom: 30px;
+            font-weight: 600;
         }
 
         /* Input Styles */
-        .input-group { margin-bottom: 20px; text-align: left; position: relative; }
+        .input-group { margin-bottom: 25px; text-align: left; }
         .input-label {
-            font-size: 0.85rem;
-            color: #777;
+            font-size: 0.9rem;
+            color: #fff;
             font-weight: 700;
             margin-bottom: 8px;
             display: block;
-            margin-left: 10px;
+            margin-left: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #fff;
+            padding: 15px 20px;
+            border: 2px solid rgba(255,255,255,0.5);
             border-radius: 20px;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.25);
             font-size: 1rem;
-            color: #444;
+            color: #fff; /* Màu chữ trắng cho nổi trên nền kính */
             outline: none;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
         }
+        input[type="text"]::placeholder { color: rgba(255,255,255,0.7); }
         input[type="text"]:focus {
-            background: #fff;
-            border-color: #ff9a9e;
-            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.2);
+            background: rgba(255,255,255,0.4);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
         }
 
-        /* Vùng Upload */
+        /* Upload Area */
         .upload-area {
-            border: 2px dashed #ffcad4;
+            border: 2px dashed rgba(255,255,255,0.6);
             border-radius: 25px;
-            padding: 25px;
+            padding: 30px 20px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             transition: all 0.3s;
             position: relative;
+            color: #fff;
         }
         .upload-area:hover {
-            border-color: #ff9a9e;
-            background: rgba(255, 255, 255, 0.9);
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.25);
             transform: scale(1.02);
         }
         .upload-area.has-file {
             border-style: solid;
-            border-color: #4facfe;
-            background: rgba(224, 247, 250, 0.6);
+            background: rgba(220, 255, 220, 0.25);
+            border-color: #76ff03;
         }
 
-        .icon-box { font-size: 2.5rem; display: block; margin-bottom: 5px; }
-        #uploadText { color: #888; font-weight: 600; font-size: 0.9rem; }
+        .icon-box { font-size: 3rem; display: block; margin-bottom: 10px; }
         #fileInput { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
+        #fileName { font-weight: 700; color: #fff; word-break: break-all; display: none; margin-top: 10px;}
 
-        /* Nút Submit Gradient */
+        /* Nút Submit */
         .btn-gradient {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             border: none;
             border-radius: 20px;
-            background-image: var(--btn-gradient);
-            background-size: 300% 100%;
-            color: white;
+            background: #fff;
+            color: #e73c7e;
             font-size: 1.1rem;
             font-weight: 800;
             cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 10px 20px rgba(255, 117, 140, 0.3);
-            transition: all 0.4s ease-in-out;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-gradient:hover {
-            background-position: 100% 0;
-            box-shadow: 0 15px 30px rgba(255, 117, 140, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Loading & Thông báo */
-        .loader {
-            width: 25px; height: 25px;
-            border: 3px solid rgba(255,255,255,0.5);
-            border-top-color: #fff;
-            border-radius: 50%;
-            display: none;
-            margin: 0 auto;
-            animation: spin 0.8s infinite linear;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .status-msg {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            display: none;
-            font-weight: 700;
-        }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-
-    </style>
-</head>
-<body>
-
-    <div class="glass-card">
-        <div class="bubble b1"></div>
-        <div class="bubble b2"></div>
-
-        <div class="logo-container">
-            <img src="https://github.com/duongcanhquan/image/blob/main/Logo%20Cao%20%C4%91a%CC%86%CC%89ng%20Vie%CC%A3%CC%82t%20My%CC%83%20-%20ba%CC%89n%20chua%CC%82%CC%89n%202025-01.png?raw=true" alt="APC Logo">
-        </div>
-        
-        <h2>Hệ Thống Kế Toán</h2>
-        <p class="subtitle">Tự động hóa xử lý chứng từ</p>
-
-        <form id="uploadForm">
-            <div class="input-group">
-                <label class="input-label">🏢 ĐỐI TÁC / ĐƠN VỊ</label>
-                <input type="text" id="companyName" placeholder="Nhập tên công ty..." required>
-            </div>
-
-            <div class="input-group">
-                <label class="input-label">📂 HÓA ĐƠN GỐC</label>
-                <div class="upload-area" id="dropZone">
-                    <span class="icon-box">🖼️</span>
-                    <span id="uploadText">Chạm để chọn ảnh hoặc chụp mới</span>
-                    <span id="fileName" style="display:none; color: #4facfe; font-weight: bold;"></span>
-                    <input type="file" name="data" id="fileInput" accept="image/*,application/pdf" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-gradient" id="submitBtn">
-                <span id="btnText">BẮT ĐẦU XỬ LÝ ✨</span>
-                <div class="loader" id="loader"></div>
-            </button>
-        </form>
-
-        <div id="statusMessage" class="status-msg"></div>
-    </div>
-
-    <script>
-        // ==========================================
-        // 👇 DÁN LINK WEBHOOK CỦA BẠN VÀO ĐÂY 👇
-        // ==========================================
-        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook/upload-invoice"; 
-        // ==========================================
-
-        const fileInput = document.getElementById('fileInput');
-        const fileNameDisplay = document.getElementById('fileName');
-        const uploadText = document.getElementById('uploadText');
-        const dropZone = document.getElementById('dropZone');
-        const companyInput = document.getElementById('companyName');
-        const submitBtn = document.getElementById('submitBtn');
-        const statusMsg = document.getElementById('statusMessage');
-        const loader = document.getElementById('loader');
-        const btnText = document.getElementById('btnText');
-
-        fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                fileNameDisplay.textContent = "✅ " + this.files[0].name;
-                fileNameDisplay.style.display = 'block';
-                uploadText.style.display = 'none';
-                dropZone.classList.add('has-file');
-            }
-        });
-
-        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (!fileInput.files[0]) { alert("Vui lòng chọn file!"); return; }
-
-            // Tạo tên file thông minh: YYYY-MM-DD_TenCongTy_TenGoc
-            const originalFile = fileInput.files[0];
-            const companyName = companyInput.value.trim().replace(/[^a-zA-Z0-9\s_]/g, "").replace(/\s+/g, "_");
-            const dateStr = new Date().toISOString().split('T')[0];
-            const extension = originalFile.name.split('.').pop();
-            const newFileName = `${dateStr}_${companyName}.${extension}`;
-
-            const formData = new FormData();
-            formData.append('data', originalFile, newFileName);
-
-            // Hiệu ứng Loading
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            loader.style.display = 'block';
-            statusMsg.style.display = 'none';
-
-            try {
-                const response = await fetch(N8N_WEBHOOK_URL, { method: 'POST', body: formData });
-                if (response.ok) {
-                    showStatus("✨ Thành công! Dữ liệu đang được AI phân tích.", "success");
-                    document.getElementById('uploadForm').reset();
-                    setTimeout(resetUI, 4000);
-                } else {
-                    showStatus("❌ Lỗi Server. Vui lòng thử lại.", "error");
-                }
-            } catch (error) {
-                // Fallback nếu lỗi CORS nhưng thực tế đã gửi được
-                console.error(error);
-                showStatus("🚀 Đã gửi yêu cầu! Vui lòng kiểm tra Sheet.", "success");
-            } finally {
-                submitBtn.disabled = false;
-                btnText.style.display = 'block';
-                loader.style.display = 'none';
-            }
-        });
-
-        function resetUI() {
-            fileNameDisplay.style.display = 'none';
-            uploadText.style.display = 'block';
-            dropZone.classList.remove('has-file');
-            statusMsg.style.display = 'none';
-        }
-
-        function showStatus(msg, type) {
-            statusMsg.textContent = msg;
-            statusMsg.className = "status-msg " + type;
-            statusMsg.style.display = 'block';
-        }
-    </script>
-</body>
-</html>
+            margin-top: 10px;
+            box-shadow:
