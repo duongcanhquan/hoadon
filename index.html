@@ -71,23 +71,6 @@
             display: block;
         }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #bdc3c7; /* Viền màu xám rõ ràng */
-            border-radius: 12px;
-            background: #fff;
-            font-size: 1rem;
-            color: #333;
-            outline: none;
-            box-sizing: border-box;
-        }
-        
-        input[type="text"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
-        }
-
         /* Vùng Upload */
         .upload-area {
             border: 2px dashed #95a5a6; /* Viền nét đứt màu xám đậm */
@@ -224,17 +207,12 @@
         </div>
         
         <div id="formScreen">
-            <h2>Kế Toán APC</h2>
-            <p class="subtitle">Hệ thống xử lý hóa đơn tự động</p>
+            <h2>PHÒNG KẾ TOÁN VIETMY COLLEGE</h2>
+            <p class="subtitle">Hệ thống ghi nhận hóa đơn tự động</p>
 
             <form id="uploadForm">
                 <div class="input-group">
-                    <label class="input-label">TÊN ĐỐI TÁC / ĐƠN VỊ</label>
-                    <input type="text" id="companyName" placeholder="Ví dụ: Cty ABC..." required>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label">FILE HÓA ĐƠN</label>
+                    <label class="input-label">FILE HÓA ĐƠN (PDF/JPEG...)</label>
                     <div class="upload-area" id="dropZone">
                         <span class="icon-box"><i class="fas fa-cloud-upload-alt"></i></span>
                         <span id="uploadText">Nhấn vào đây để chọn file</span>
@@ -253,7 +231,7 @@
         <div id="successScreen" class="success-screen">
             <i class="fas fa-check-circle success-icon"></i>
             <h2 style="color: #28a745;">Thành Công!</h2>
-            <p style="color: #555;">Dữ liệu đang được xử lý.</p>
+            <p style="color: #FF0000;">Dữ liệu đang được xử lý.</p>
             
             <a href="https://drive.google.com/drive/u/0/folders/1K12LJH4kFxzDpUxZUVAcTZvnMhRMNxca" target="_blank" class="btn-drive">
                 <i class="fab fa-google-drive"></i> MỞ THƯ MỤC DRIVE
@@ -265,13 +243,13 @@
     </div>
 
     <script>
-        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook-test/upload-invoice"; 
+        const N8N_WEBHOOK_URL = "https://apchn-host.lapage.vn/webhook/upload-invoice"; 
 
         const fileInput = document.getElementById('fileInput');
         const fileNameDisplay = document.getElementById('fileName');
         const uploadText = document.getElementById('uploadText');
         const dropZone = document.getElementById('dropZone');
-        const companyInput = document.getElementById('companyName');
+        // Đã xóa biến companyInput vì không còn dùng
         const submitBtn = document.getElementById('submitBtn');
         const loader = document.getElementById('loader');
         const btnText = document.getElementById('btnText');
@@ -292,10 +270,11 @@
             if (!fileInput.files[0]) { alert("Vui lòng chọn file!"); return; }
 
             const originalFile = fileInput.files[0];
-            const companyName = companyInput.value.trim().replace(/[^a-zA-Z0-9\s_]/g, "").replace(/\s+/g, "_");
+            
+            // LOGIC MỚI: Tự động đặt tên file vì không còn ô nhập tên đối tác
+            // Format: YYYY-MM-DD_TenFileGoc
             const dateStr = new Date().toISOString().split('T')[0];
-            const extension = originalFile.name.split('.').pop();
-            const newFileName = `${dateStr}_${companyName}.${extension}`;
+            const newFileName = `${dateStr}_${originalFile.name}`;
 
             const formData = new FormData();
             formData.append('data', originalFile, newFileName);
