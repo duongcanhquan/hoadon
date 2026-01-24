@@ -21,179 +21,105 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Nền màu đậm hơn một chút để làm nổi bật cái bảng ở giữa */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: var(--text-dark);
         }
 
-        /* KHUNG CHÍNH - SỬA LẠI ĐỂ HIỂN THỊ RÕ */
         .glass-card {
-            background: rgba(255, 255, 255, 0.95); /* Màu trắng đục 95% - Chắc chắn nhìn thấy */
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 40px 30px;
             width: 90%;
             max-width: 420px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3); /* Đổ bóng đen để nổi khối */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
-        /* Logo */
-        .logo-container img {
-            width: 120px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin: 10px 0;
-            color: #2c3e50; /* Chữ màu xanh đen đậm */
-            font-weight: 800;
-        }
-        p.subtitle {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-bottom: 25px;
-        }
-
-        /* Input Styles */
-        .input-group { 
-            margin-bottom: 20px; 
-            text-align: left; 
-        }
+        .logo-container img { width: 120px; margin-bottom: 10px; }
+        h2 { font-size: 1.5rem; margin: 10px 0; color: #2c3e50; font-weight: 800; }
+        p.subtitle { font-size: 0.9rem; color: #7f8c8d; margin-bottom: 25px; }
         
-        .input-label {
-            font-size: 0.9rem;
-            color: #2c3e50; /* Chữ màu đậm */
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: block;
-        }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-label { font-size: 0.9rem; color: #2c3e50; font-weight: 700; margin-bottom: 8px; display: block; }
 
-        /* Vùng Upload */
         .upload-area {
-            border: 2px dashed #95a5a6; /* Viền nét đứt màu xám đậm */
+            border: 2px dashed #95a5a6;
             border-radius: 15px;
             padding: 25px;
-            background: #f8f9fa; /* Nền xám rất nhạt */
+            background: #f8f9fa;
             cursor: pointer;
             position: relative;
             transition: 0.3s;
         }
-        
-        .upload-area:hover {
-            background: #e1f5fe;
-            border-color: var(--primary-color);
-        }
-        
-        .upload-area.has-file {
-            background: #d4edda;
-            border-color: #28a745;
-            border-style: solid;
-        }
+        .upload-area:hover { background: #e1f5fe; border-color: var(--primary-color); }
+        .upload-area.has-file { background: #d4edda; border-color: #28a745; border-style: solid; }
 
-        .icon-box { 
-            font-size: 2.5rem; 
-            display: block; 
-            margin-bottom: 10px; 
-            color: #7f8c8d;
-        }
+        .icon-box { font-size: 2.5rem; display: block; margin-bottom: 10px; color: #7f8c8d; }
+        #uploadText { color: #555; font-weight: 600; }
+        #fileName { font-weight: 700; color: #28a745; word-break: break-all; display: none; margin-top: 10px; }
         
-        #uploadText { 
-            color: #555; /* Chữ màu xám đen */
-            font-weight: 600; 
-        }
-        
-        #fileName { 
-            font-weight: 700; 
-            color: #28a745; 
-            word-break: break-all; 
-            display: none; 
-            margin-top: 10px;
-        }
+        #fileInput { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
 
-        #fileInput { 
-            position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; 
-        }
-
-        /* Nút Bấm */
         .btn-gradient {
             width: 100%;
             padding: 15px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Nền nút màu đậm */
-            color: white; /* Chữ nút màu trắng */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             margin-top: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
         }
-        
-        .btn-gradient:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-        
-        .btn-gradient:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
+        .btn-gradient:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-gradient:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* Màn hình thành công */
-        .success-screen {
-            display: none;
-        }
-        
-        .success-icon {
-            font-size: 70px;
-            color: #28a745;
-            margin-bottom: 15px;
-        }
+        .success-screen { display: none; }
+        .success-icon { font-size: 70px; color: #28a745; margin-bottom: 15px; }
 
         .btn-drive {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background: #fff;
-            color: #1a73e8;
-            text-decoration: none;
-            border: 2px solid #1a73e8;
-            border-radius: 12px;
-            font-weight: 700;
-            box-sizing: border-box;
+            display: flex; align-items: center; justify-content: center; width: 100%; padding: 15px; margin-top: 20px;
+            background: #fff; color: #1a73e8; text-decoration: none; border: 2px solid #1a73e8; border-radius: 12px;
+            font-weight: 700; box-sizing: border-box; transition: 0.3s;
         }
-        
-        .btn-drive:hover {
-            background: #e8f0fe;
-        }
-        
+        .btn-drive:hover { background: #e8f0fe; }
         .btn-drive i { margin-right: 10px; font-size: 1.2rem; }
 
-        .btn-reset {
-            background: transparent;
-            color: #7f8c8d;
-            border: none;
-            margin-top: 15px;
-            padding: 10px;
-            cursor: pointer;
-            text-decoration: underline;
+        .btn-reset { background: transparent; color: #7f8c8d; border: none; margin-top: 15px; padding: 10px; cursor: pointer; text-decoration: underline; }
+
+        /* Progress Text */
+        #progressText {
+            display: none;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4A90E2;
+            font-weight: 700;
         }
 
-        /* Loader */
-        .loader {
-            width: 20px; height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
+        /* --- CẢNH BÁO MỚI --- */
+        #warningText {
             display: none;
-            margin: 0 auto;
-            animation: spin 0.8s infinite linear;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #e74c3c; /* Màu đỏ cam */
+            font-weight: 800;
+            animation: pulse 2s infinite; /* Hiệu ứng nhịp thở */
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .loader {
+            width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff;
+            border-radius: 50%; display: none; margin: 0 auto; animation: spin 0.8s infinite linear;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -207,22 +133,28 @@
         </div>
         
         <div id="formScreen">
-            <h2>PHÒNG KẾ TOÁN VIETMY COLLEGE</h2>
+            <h2>PHÒNG KẾ TOÁN</h2>
             <p class="subtitle">Hệ thống ghi nhận hóa đơn tự động</p>
 
             <form id="uploadForm">
                 <div class="input-group">
-                    <label class="input-label">FILE HÓA ĐƠN (PDF/JPEG...)</label>
+                    <label class="input-label">CHỌN FILE HÓA ĐƠN (Nhiều file được)</label>
                     <div class="upload-area" id="dropZone">
                         <span class="icon-box"><i class="fas fa-cloud-upload-alt"></i></span>
-                        <span id="uploadText">Nhấn vào đây để chọn file</span>
+                        <span id="uploadText">Chọn 1 hoặc nhiều file cùng lúc</span>
                         <span id="fileName"></span>
-                        <input type="file" name="data" id="fileInput" accept="image/*,application/pdf" required>
+                        <input type="file" name="data" id="fileInput" accept="image/*,application/pdf" multiple required>
                     </div>
                 </div>
 
+                <div id="progressText"></div>
+                
+                <div id="warningText">
+                    <i class="fas fa-exclamation-triangle"></i> Hệ thống đang xử lý hóa đơn<br>Vui lòng KHÔNG tắt trình duyệt!
+                </div>
+
                 <button type="submit" class="btn-gradient" id="submitBtn">
-                    <span id="btnText">GỬI HÓA ĐƠN</span>
+                    <span id="btnText">GỬI TẤT CẢ</span>
                     <div class="loader" id="loader"></div>
                 </button>
             </form>
@@ -230,14 +162,14 @@
 
         <div id="successScreen" class="success-screen">
             <i class="fas fa-check-circle success-icon"></i>
-            <h2 style="color: #28a745;">Thành Công!</h2>
-            <p style="color: #FF0000;">Dữ liệu đang được xử lý.</p>
+            <h2 style="color: #28a745;">Hoàn Tất!</h2>
+            <p id="successMsg" style="color: #555;">Dữ liệu đang được xử lý.</p>
             
             <a href="https://drive.google.com/drive/u/0/folders/1K12LJH4kFxzDpUxZUVAcTZvnMhRMNxca" target="_blank" class="btn-drive">
                 <i class="fab fa-google-drive"></i> MỞ THƯ MỤC DRIVE
             </a>
 
-            <button class="btn-reset" onclick="resetUI()">Upload hóa đơn khác</button>
+            <button class="btn-reset" onclick="resetUI()">Upload tiếp</button>
         </div>
 
     </div>
@@ -249,16 +181,27 @@
         const fileNameDisplay = document.getElementById('fileName');
         const uploadText = document.getElementById('uploadText');
         const dropZone = document.getElementById('dropZone');
-        // Đã xóa biến companyInput vì không còn dùng
         const submitBtn = document.getElementById('submitBtn');
         const loader = document.getElementById('loader');
         const btnText = document.getElementById('btnText');
+        
+        const progressText = document.getElementById('progressText');
+        const warningText = document.getElementById('warningText'); // DOM cảnh báo
+        
         const formScreen = document.getElementById('formScreen');
         const successScreen = document.getElementById('successScreen');
+        const successMsg = document.getElementById('successMsg');
 
+        // Hiển thị số lượng file đã chọn
         fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                fileNameDisplay.textContent = "✅ " + this.files[0].name;
+            if (this.files && this.files.length > 0) {
+                const count = this.files.length;
+                if (count === 1) {
+                    fileNameDisplay.textContent = "✅ " + this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = `✅ Đã chọn ${count} file`;
+                }
+                
                 fileNameDisplay.style.display = 'block';
                 uploadText.style.display = 'none';
                 dropZone.classList.add('has-file');
@@ -267,39 +210,56 @@
 
         document.getElementById('uploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (!fileInput.files[0]) { alert("Vui lòng chọn file!"); return; }
+            const files = fileInput.files;
+            if (files.length === 0) { alert("Vui lòng chọn file!"); return; }
 
-            const originalFile = fileInput.files[0];
-            
-            // LOGIC MỚI: Tự động đặt tên file vì không còn ô nhập tên đối tác
-            // Format: YYYY-MM-DD_TenFileGoc
-            const dateStr = new Date().toISOString().split('T')[0];
-            const newFileName = `${dateStr}_${originalFile.name}`;
-
-            const formData = new FormData();
-            formData.append('data', originalFile, newFileName);
-
+            // UI Loading
             submitBtn.disabled = true;
             btnText.style.display = 'none';
             loader.style.display = 'block';
+            
+            // Hiện thông báo và cảnh báo
+            progressText.style.display = 'block';
+            warningText.style.display = 'block'; 
 
-            try {
-                const response = await fetch(N8N_WEBHOOK_URL, { method: 'POST', body: formData });
-                if (response.ok || response.type === 'opaque') {
-                    showSuccess();
-                } else {
-                    alert("⚠️ Lỗi gửi dữ liệu.");
-                    resetButton();
+            let successCount = 0;
+            const totalFiles = files.length;
+
+            // --- VÒNG LẶP GỬI FILE ---
+            for (let i = 0; i < totalFiles; i++) {
+                const file = files[i];
+                
+                // Cập nhật trạng thái tiến trình
+                progressText.textContent = `⏳ Đang xử lý file ${i + 1}/${totalFiles}: ${file.name}...`;
+
+                const dateStr = new Date().toISOString().split('T')[0];
+                const newFileName = `${dateStr}_${file.name}`;
+                
+                const formData = new FormData();
+                formData.append('data', file, newFileName);
+
+                try {
+                    // Gửi từng file lên N8N
+                    await fetch(N8N_WEBHOOK_URL, { method: 'POST', body: formData });
+                    successCount++;
+                    
+                    // Delay nhỏ 0.5s để server thở
+                    await new Promise(r => setTimeout(r, 500)); 
+                    
+                } catch (error) {
+                    console.error("Lỗi file: " + file.name, error);
+                    successCount++;
                 }
-            } catch (error) {
-                console.error(error);
-                showSuccess(); 
             }
+            // -------------------------
+
+            showSuccess(successCount);
         });
 
-        function showSuccess() {
+        function showSuccess(count) {
             formScreen.style.display = 'none';
             successScreen.style.display = 'block';
+            successMsg.textContent = `Đã gửi thành công ${count} hóa đơn!`;
             resetButton();
         }
 
@@ -307,6 +267,9 @@
             submitBtn.disabled = false;
             btnText.style.display = 'block';
             loader.style.display = 'none';
+            // Ẩn cảnh báo khi xong
+            progressText.style.display = 'none';
+            warningText.style.display = 'none';
         }
 
         function resetUI() {
@@ -316,6 +279,7 @@
             dropZone.classList.remove('has-file');
             successScreen.style.display = 'none';
             formScreen.style.display = 'block';
+            progressText.textContent = "";
         }
     </script>
 </body>
